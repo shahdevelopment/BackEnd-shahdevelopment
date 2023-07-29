@@ -1,15 +1,23 @@
 {
   "name": "profile_backend",
   "version": "1.0.0",
-  "description": "backend-profilesite",
+  "description": "",
   "main": "server.js",
   "scripts": {
-    "backend": "nodemon server.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Shah0373/profile_backend.git"
   },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shah0373/profile_backend/issues"
+  },
+  "homepage": "https://github.com/Shah0373/profile_backend#readme",
   "dependencies": {
-    "cors": "^2.8.5",
     "express": "^4.18.2"
   }
 }
