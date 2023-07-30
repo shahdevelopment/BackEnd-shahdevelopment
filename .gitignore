@@ -1,0 +1,6 @@
+.utils
+build_logs
+node_modules
+deploy-image.bat
+nginx.conf
+notes

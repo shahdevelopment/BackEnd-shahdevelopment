@@ -1,0 +1,8 @@
+node_modules
+Dockerfile
+nginx.conf
+.utils
+build_logs
+.gitignore
+deploy-image.bat
+notes
