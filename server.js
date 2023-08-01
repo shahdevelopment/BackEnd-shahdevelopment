@@ -32,7 +32,7 @@ app.post('/api', (req, res) => {
     res.json(data);
 });
 app.delete('/api/:id', (req, res) => {
-    const postId = request.params.id;
+    const postId = req.params.id;
     console.log(postId);
     database.remove({ _id: postId }, {}, (err, numRemoved) => {
         if (err) {
@@ -52,7 +52,9 @@ app.get('/ready', (req, res) => {
     const message = "Ready!";
     res.status(200).json({ info: message })
 })
-app.post('db-test', (request, response) => {
-    database.insert({ name: 'Sheefamn', status: 'train' });
-    database.insert({ name: 'cat', status: 'alive' });
+app.get('db-test', (req, res) => {
+    data = { name: 'Sheefamn', status: 'train' }
+    database.insert(data);
+    const postId = res.params.id;
+    res.status(200).json({ info: postId })
 })
