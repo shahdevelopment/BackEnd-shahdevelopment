@@ -1,5 +1,4 @@
 const express = require('express');
-const { request } = require('http');
 const Datastore = require('nedb');
 const app = express()
 const PORT = 9000
