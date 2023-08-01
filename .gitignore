@@ -1,7 +1,11 @@
+# Standardized
+npm-debug.log
+node_modules
+.vs
 .utils
 build_logs
-node_modules
-deploy-image.bat
-nginx.conf
-notes
 git-push.bat
+dev/notes
+
+# Specific:
+.dockerignore
