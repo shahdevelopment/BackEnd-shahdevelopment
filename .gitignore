@@ -4,3 +4,4 @@ node_modules
 deploy-image.bat
 nginx.conf
 notes
+git-push.bat
