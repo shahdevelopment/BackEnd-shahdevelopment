@@ -11,7 +11,7 @@ RUN apt-get install ca-certificates
 COPY package*.json .
 # RUN npm install
 # If you are building your code for production
-RUN npm install axios && npm ci --only=production
+RUN npm install axios && npm ci --only=production && mkdir npm-tests
 
 EXPOSE 9000
 
