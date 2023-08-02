@@ -38,6 +38,14 @@ async function evaluatePaths() {
             }
         }
         // Write the report to a file
+
+        // Create a directory called "npm-tests" if it doesn't exist
+        const reportDir = 'npm-tests';
+        if (!fs.existsSync(reportDir)) {
+            fs.mkdirSync(reportDir);
+        }
+
+
         const reportFilePath = `${reportDir}/report.json`;
         fs.writeFileSync(reportFilePath, JSON.stringify(report, null, 2));
         console.log(`Report generated and stored in: ${reportFilePath}`);
