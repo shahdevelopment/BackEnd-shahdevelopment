@@ -11,7 +11,7 @@ RUN apt-get install ca-certificates
 COPY package*.json .
 # RUN npm install
 # If you are building your code for production
-RUN RUN npm ci --only=production
+RUN RUN npm install
 
 EXPOSE 9000
 
