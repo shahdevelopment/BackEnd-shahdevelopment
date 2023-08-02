@@ -37,6 +37,10 @@ async function evaluatePaths() {
                 report.push({ path, status: 'error', error: error.message });
             }
         }
+        // Write the report to a file
+        const reportFilePath = `${reportDir}/report.json`;
+        fs.writeFileSync(reportFilePath, JSON.stringify(report, null, 2));
+        console.log(`Report generated and stored in: ${reportFilePath}`);
     } catch (error) {
         console.error('Error occurred:', error);
     }
