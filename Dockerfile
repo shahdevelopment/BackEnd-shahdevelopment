@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:14
 # Set environment variables
 ENV api_key_chat=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
 # Set the working directory
