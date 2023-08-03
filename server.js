@@ -24,8 +24,10 @@ app.get('/api', (req, res) => {
     });
 });
 app.post('/api', (req, res) => {
+    var now = new Date();
+    var isoString = now.ISOString();
     const data = req.body || {};
-    const timestamp = Date.now();
+    const timestamp = isoString;
     data.timestamp = timestamp;
     database.insert(data);
     res.json(data);
