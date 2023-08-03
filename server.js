@@ -10,10 +10,12 @@ database.loadDatabase();
 app.listen(PORT, HOST, () => {
     console.log(`Server has started on http://${HOST}:${PORT}`)
 })
+
 app.get('/chat', (req, res) => {
     const apiKey = process.env.api_key_chat;
     res.status(200).json({ info: apiKey })
 })
+
 app.get('/api', (req, res) => {
     database.find({}, (err, data) => {
         if (err) {
@@ -23,15 +25,17 @@ app.get('/api', (req, res) => {
         res.json(data);
     });
 });
+
 app.post('/api', (req, res) => {
     var now = new Date();
     var isoString = now.ISOString();
-    const data = req.body || {};
+    var data = req.body || {};
     const timestamp = isoString;
     data.timestamp = timestamp;
     database.insert(data);
     res.json(data);
 });
+
 app.delete('/api/:id', (req, res) => {
     const postId = req.params.id;
     console.log(postId);
@@ -45,10 +49,12 @@ app.delete('/api/:id', (req, res) => {
         }
     });
 });
+
 app.get('/health', (req, res) => {
     const message = "Healthy!";
     res.status(200).json({ info: message })
 })
+
 app.get('/ready', (req, res) => {
     const message = "Ready!";
     res.status(200).json({ info: message })
