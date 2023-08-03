@@ -51,9 +51,3 @@ app.get('/ready', (req, res) => {
     const message = "Ready!";
     res.status(200).json({ info: message })
 })
-app.get('db-test', (req, res) => {
-    data = { name: 'Sheefamn', status: 'train' }
-    database.insert(data);
-    const postId = res.params.id;
-    res.status(200).json({ info: postId })
-})
