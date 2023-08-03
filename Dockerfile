@@ -15,7 +15,7 @@ RUN npm install axios && npm ci --only=production
 
 EXPOSE 9000
 
-USER node
+# USER node
 # ADD requirements.txt ./
 COPY . .
 
