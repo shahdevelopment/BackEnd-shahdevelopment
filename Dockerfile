@@ -12,7 +12,7 @@ COPY package*.json .
 # RUN npm install
 # If you are building your code for production
 RUN npm install axios && npm ci --only=production
-
+RUN if [ "$ENVIRONMENT" = "dev" ]; then npm install axios jest fs; else npm install --only=production; fi
 EXPOSE 9000
 
 # USER node
