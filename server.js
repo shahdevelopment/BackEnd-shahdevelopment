@@ -26,14 +26,12 @@ app.get('/api', (req, res) => {
     });
 });
 
-app.post('/api', (req, res) => {
-    var now = new Date();
-    var isoString = now.ISOString();
-    var data = req.body || {};
-    const timestamp = isoString;
+app.post('/api', (request, response) => {
+    const data = request.body;
+    const timestamp = Date.now();
     data.timestamp = timestamp;
     database.insert(data);
-    res.json(data);
+    response.json(data);
 });
 
 app.delete('/api/:id', (req, res) => {
