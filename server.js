@@ -27,10 +27,13 @@ app.get('/api', (req, res) => {
 });
 
 app.post('/api', (request, response) => {
-    var data = request.body;
-    (time = Date.now());
-    console.log(time)
-    data.timestamp = time;
+    var data = {};
+    data = request.body;
+    getIndexTime = new Date();
+    var callActiveHours = getIndexTime.getHours();
+    var callActiveMinutes = getIndexTime.getMinutes();
+    var callActiveSeconds = getIndexTime.getSeconds();
+    data.timestamp = callActiveHours + ":" + callActiveMinutes + ":" + callActiveSeconds;
     database.insert(data);
     response.json(data);
 });
