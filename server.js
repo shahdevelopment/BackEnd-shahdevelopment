@@ -34,11 +34,11 @@ function getTime() {
 app.post('/api', (request, response) => {
     var data = {};
     data = request.body;
-    var time = getTime;
+    var time = new Date(getTime()); // making sure changes are made
     var callActiveHours = time.getHours();
     var callActiveMinutes = time.getMinutes();
     var callActiveSeconds = time.getSeconds();
-    data.timestamp = callActiveHours + ":" + callActiveMinutes + ":" + callActiveSeconds;
+    data.timestamp = callActiveHours.toString().padStart(2, '0') + ":" + callActiveMinutes.toString().padStart(2, '0') + ":" + callActiveSeconds.toString().padStart(2, '0'); // add leading zeros    
     database.insert(data);
     response.json(data);
 });
