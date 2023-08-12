@@ -26,13 +26,18 @@ app.get('/api', (req, res) => {
     });
 });
 
+function getTime() {
+    var getIndexTime = new Date().valueOf();
+    return getIndexTime; // returns the value of getIndexTime
+  }
+
 app.post('/api', (request, response) => {
     var data = {};
     data = request.body;
-    getIndexTime = new Date();
-    var callActiveHours = getIndexTime.getHours();
-    var callActiveMinutes = getIndexTime.getMinutes();
-    var callActiveSeconds = getIndexTime.getSeconds();
+    var time = getTime;
+    var callActiveHours = time.getHours();
+    var callActiveMinutes = time.getMinutes();
+    var callActiveSeconds = time.getSeconds();
     data.timestamp = callActiveHours + ":" + callActiveMinutes + ":" + callActiveSeconds;
     database.insert(data);
     response.json(data);
