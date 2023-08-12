@@ -28,7 +28,7 @@ app.get('/api', (req, res) => {
 
 app.post('/api', (request, response) => {
     var data = request.body;
-    const time = Date.now();
+    (time = Date.now());
     console.log(time)
     data.timestamp = time;
     database.insert(data);
