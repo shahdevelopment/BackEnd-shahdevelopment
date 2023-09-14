@@ -51,11 +51,11 @@ app.post('/api', (req, res) => {
     // data.timestamp = callActiveHours.toString().padStart(2, '0') + ":" + callActiveMinutes.toString().padStart(2, '0') + ":" + callActiveSeconds.toString().padStart(2, '0'); // add leading zeros    
     // database.insert(data);
     // res.json(data);
-    const data = request.body;
+    const data = req.body;
     const timestamp = Date.now();
     data.timestamp = timestamp;
     database.insert(data);
-    response.json(data);
+    res.json(data);
 });
 
 app.delete('/api/:id', (req, res) => {
