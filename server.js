@@ -1,5 +1,6 @@
 const express = require('express');
 const Datastore = require('nedb');
+const dbPath = 's3/drawings.db';
 
 const app = express()
 const PORT = 9000
@@ -17,7 +18,7 @@ app.listen(PORT, HOST, () => {
     console.log(`Server has started on http://${HOST}:${PORT}`)
 })
 
-const database = new Datastore('drawings.db');
+const database = new Datastore({ filename: dbPath, autoload: true });
 database.loadDatabase();
 
 // #######################################################################
