@@ -1,10 +1,13 @@
 const express = require('express');
 const Datastore = require('nedb');
-const dbPath = 's3/drawings.db';
+const AWS = require('aws-sdk');
+const fs = require('fs');
 
+const dbPath = 's3://kubedevops001/kube_pv/drawings.db';
 const app = express()
 const PORT = 9000
 const HOST = '0.0.0.0';
+
 
 // Set the MIME type for JavaScript files
 app.set('view engine', 'js');
@@ -55,7 +58,21 @@ app.post('/api', (req, res) => {
     const data = req.body;
     const timestamp = Date.now();
     data.timestamp = timestamp;
-    database.insert(data);
+    const params = {
+        Bucket: 'kubedevops001',
+        Key: 'drawings.db',
+        UploadId: 'c573c445-f28c-4a67-b646-9b031d15a8da', // Retrieve this from the initial upload
+        Body: fs.createReadStream(database.insert(data)), // Specify the file you want to append
+        PartNumber: 1, // This is the part number of the append operation
+    };
+    // Initiate the multipart upload append
+    s3.uploadPart(params, (err, data) => {
+        if (err) {
+            console.error(err);
+        } else {
+            console.log('DB Insert successful:', data);
+        }
+    });
     res.json(data);
 });
 
