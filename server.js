@@ -1,16 +1,26 @@
 const express = require('express');
 const Datastore = require('nedb');
+
 const app = express()
 const PORT = 9000
 const HOST = '0.0.0.0';
-const database = new Datastore('drawings.db');
 
-database.loadDatabase();
+// Set the MIME type for JavaScript files
+app.set('view engine', 'js');
+app.engine('js', (_, options, callback) => {
+    callback(null, options.source);
+});
+
+app.use(express.json({ limit: '1mb' }));
 
 app.listen(PORT, HOST, () => {
     console.log(`Server has started on http://${HOST}:${PORT}`)
 })
 
+const database = new Datastore('drawings.db');
+database.loadDatabase();
+
+// #######################################################################
 app.get('/chat', (req, res) => {
     const apiKey = process.env.api_key_chat;
     res.status(200).json({ info: apiKey })
@@ -29,16 +39,21 @@ app.get('/api', (req, res) => {
 function getTime() {
     var getIndexTime = new Date().valueOf();
     return getIndexTime; // returns the value of getIndexTime
-  }
+}
 
-app.post('/api', (request, response) => {
-    var data = {};
-    data = request.body;
-    var time = new Date(getTime()); // making sure changes are made
-    var callActiveHours = time.getHours();
-    var callActiveMinutes = time.getMinutes();
-    var callActiveSeconds = time.getSeconds();
-    data.timestamp = callActiveHours.toString().padStart(2, '0') + ":" + callActiveMinutes.toString().padStart(2, '0') + ":" + callActiveSeconds.toString().padStart(2, '0'); // add leading zeros    
+app.post('/api', (req, res) => {
+    // var data = {};
+    // data = req.body;
+    // var time = new Date(getTime()); // making sure changes are made
+    // var callActiveHours = time.getHours();
+    // var callActiveMinutes = time.getMinutes();
+    // var callActiveSeconds = time.getSeconds();
+    // data.timestamp = callActiveHours.toString().padStart(2, '0') + ":" + callActiveMinutes.toString().padStart(2, '0') + ":" + callActiveSeconds.toString().padStart(2, '0'); // add leading zeros    
+    // database.insert(data);
+    // res.json(data);
+    const data = request.body;
+    const timestamp = Date.now();
+    data.timestamp = timestamp;
     database.insert(data);
     response.json(data);
 });
