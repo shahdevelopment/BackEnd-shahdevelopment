@@ -1,6 +1,6 @@
 const express = require('express');
 const Datastore = require('nedb');
-const S3Adapter = require('./js/s3Adapter');
+const S3Adapter = require('./s3Adapter');
 
 
 const app = express()
