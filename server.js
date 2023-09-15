@@ -1,7 +1,6 @@
 const express = require('express');
 const Datastore = require('nedb');
-const S3Adapter = require('./s3Adapter');
-
+const S3Adapter = require('./public/s3Adapter');
 
 const app = express()
 const PORT = 9000
@@ -36,7 +35,6 @@ const db = new Datastore({
     }),
 });
 
-db.loadDatabase();
 // #######################################################################
 app.get('/chat', (req, res) => {
     const apiKey = process.env.api_key_chat;

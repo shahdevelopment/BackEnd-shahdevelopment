@@ -1,3 +1,6 @@
+const AWS = require('aws-sdk');
+const fs = require('fs');
+
 const newFile = 'kube_pv/drawings.db'
 const kubedevops = 'kubedevops001'
 
