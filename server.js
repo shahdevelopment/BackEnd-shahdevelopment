@@ -1,6 +1,6 @@
 const express = require('express');
 const Datastore = require('nedb');
-const S3Adapter = require('./public/s3Adapter');
+const S3Adapter = require('./s3Adapter');
 
 const app = express()
 const PORT = 9000
@@ -13,13 +13,13 @@ app.engine('js', (_, options, callback) => {
 });
 
 // require('dotenv').config();
-app.use(express.static('public', {
-    setHeaders: (response, path, stat) => {
-        if (path.endsWith('js')) {
-            response.setHeader('Content-Type', 'application/javascript');
-        }
-    }
-}));
+// app.use(express.static('public', {
+//     setHeaders: (response, path, stat) => {
+//         if (path.endsWith('js')) {
+//             response.setHeader('Content-Type', 'application/javascript');
+//         }
+//     }
+// }));
 
 app.use(express.json({ limit: '1mb' }));
 
