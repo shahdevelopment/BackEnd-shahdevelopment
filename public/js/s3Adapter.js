@@ -1,4 +1,5 @@
-fileNew = kube_pv / drawings.db
+const newFile = 'kube_pv/drawings.db'
+const kubedevops = 'kubedevops001'
 
 class S3Adapter {
     constructor(options) {
@@ -6,13 +7,13 @@ class S3Adapter {
         this.s3 = new AWS.S3();
     }
 
-    setStorageFile(fileNew, callback) {
+    setStorageFile(callback) {
         const params = {
-            Bucket: kubedevops001,
-            Key: fileNew,
-            Body: fs.readFileSync(fileNew),
+            Bucket: kubedevops,
+            Key: newFile,
+            Body: fs.readFileSync(newFile)
         };
-
+        console.log(newFile)
         this.s3.upload(params, (err, data) => {
             if (err) return callback(err);
             return callback(null, data);

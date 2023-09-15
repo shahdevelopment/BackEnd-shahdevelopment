@@ -27,7 +27,7 @@ app.listen(PORT, HOST, () => {
 })
 
 const db = new Datastore({
-    filename: 's3://kubedevops001/kube_pv/drawings.db', // Specify your S3 path
+    filename: 's3://kubedevops001/kube_pv/drawings.db',
     autoload: true,
     storage: new S3Adapter({
         bucket: 'kubedevops001'
