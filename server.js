@@ -1,5 +1,7 @@
 const express = require('express');
 const Datastore = require('nedb');
+const S3Adapter = require('./s3Adapter');
+
 
 const app = express()
 const PORT = 9000
