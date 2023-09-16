@@ -2,7 +2,7 @@ const AWS = require('aws-sdk');
 const fs = require('fs');
 
 const newFile = 'kube_pv/drawings.db'
-const kubedevops = 'kubedevops001'
+const kubedevops = 'arn:aws:s3:us-west-1:237907962581:accesspoint/kubedevops001'
 
 class S3Adapter {
     constructor(options) {

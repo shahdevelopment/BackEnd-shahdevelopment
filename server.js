@@ -28,10 +28,10 @@ app.listen(PORT, HOST, () => {
 })
 
 const db = new Datastore({
-    filename: 's3://kubedevops001/kube_pv/drawings.db',
+    filename: 'drawings.db',
     autoload: true,
     storage: new S3Adapter({
-        bucket: 'kubedevops001'
+        bucket: 'arn:aws:s3:us-west-1:237907962581:accesspoint/kubedevops001'
     }),
 });
 
