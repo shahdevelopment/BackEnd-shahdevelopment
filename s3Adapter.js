@@ -15,7 +15,7 @@ class S3Adapter {
             Key: 'newFilename',
             Body: fs.readFileSync(newFilename)
         };
-        console.log(newFile)
+        console.log(newFilename)
         this.s3.upload(params, (err, data) => {
             if (err) return callback(err);
             return callback(null, data);
