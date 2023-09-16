@@ -6,6 +6,14 @@ const app = express()
 const PORT = 9000
 const HOST = '0.0.0.0';
 
+const db = new Datastore({
+    filename: 's3://kubedevops001/kube_pv/drawings.db',
+    autoload: true,
+    storage: new S3Adapter({
+        bucket: 'kubedevops001'
+    }),
+});
+
 // Set the MIME type for JavaScript files
 app.set('view engine', 'js');
 app.engine('js', (_, options, callback) => {
@@ -26,14 +34,6 @@ app.use(express.json({ limit: '1mb' }));
 app.listen(PORT, HOST, () => {
     console.log(`Server has started on http://${HOST}:${PORT}`)
 })
-
-const db = new Datastore({
-    filename: 'drawings.db',
-    autoload: true,
-    storage: new S3Adapter({
-        bucket: 'arn:aws:s3:us-west-1:237907962581:accesspoint/kubedevops001'
-    }),
-});
 
 // #######################################################################
 app.get('/chat', (req, res) => {

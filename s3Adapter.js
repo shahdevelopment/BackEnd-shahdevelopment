@@ -1,8 +1,7 @@
 const AWS = require('aws-sdk');
 const fs = require('fs');
 
-const newFile = 'kube_pv/drawings.db'
-const kubedevops = 'arn:aws:s3:us-west-1:237907962581:accesspoint/kubedevops001'
+AWS.config.update({ region: 'us-west-1' });
 
 class S3Adapter {
     constructor(options) {
@@ -10,11 +9,11 @@ class S3Adapter {
         this.s3 = new AWS.S3();
     }
 
-    setStorageFile(callback) {
+    setStorageFile(newFilename, callback) {
         const params = {
-            Bucket: kubedevops,
-            Key: newFile,
-            Body: fs.readFileSync(newFile)
+            Bucket: 'this.options.bucket',
+            Key: 'newFilename',
+            Body: fs.readFileSync(newFilename)
         };
         console.log(newFile)
         this.s3.upload(params, (err, data) => {
