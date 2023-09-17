@@ -1,12 +1,12 @@
-FROM node:latest
+FROM node:alpine
 # Set environment variables
 ENV api_key_chat=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
 # Set the working directory
 WORKDIR /usr/src/app
 ARG ENVIRONMENT
-RUN apt-get update
+# RUN apt-get update
 
-RUN apt-get install ca-certificates
+# RUN apt-get install ca-certificates
 
 COPY package*.json .
 # RUN npm install
