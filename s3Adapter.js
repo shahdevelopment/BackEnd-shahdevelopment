@@ -12,8 +12,8 @@ class S3Adapter {
     setStorageFile(newFilename, callback) {
         const params = {
             Bucket: this.options.bucket,
-            Key: newFilename,
-            Body: fs.readFileSync(newFilename)
+            Key: "kube_pv/drawings.db",
+            Body: fs.readFileSync("drawings.db")
         };
         console.log(newFilename)
         this.s3.upload(params, (err, data) => {
