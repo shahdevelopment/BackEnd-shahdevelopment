@@ -11,8 +11,8 @@ class S3Adapter {
 
     setStorageFile(newFilename, callback) {
         const params = {
-            Bucket: 'this.options.bucket',
-            Key: 'newFilename',
+            Bucket: this.options.bucket,
+            Key: newFilename,
             Body: fs.readFileSync(newFilename)
         };
         console.log(newFilename)
