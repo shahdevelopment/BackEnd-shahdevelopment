@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 ARG ENVIRONMENT
 RUN apk update
 
-RUN apk install ca-certificates
+RUN apk add ca-certificates
 
 COPY package*.json .
 # RUN npm install
