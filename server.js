@@ -7,10 +7,10 @@ const PORT = 9000
 const HOST = '0.0.0.0';
 
 const db = new Datastore({
-    filename: 's3://kubedevops001/kube_pv/drawings.db',
+    filename: 'drawings.db',
     autoload: true,
     storage: new S3Adapter({
-        bucket: 'kubedevops001'
+        bucket: 's3://kubedevops001/kube_pv/drawings.db'
     }),
 });
 
