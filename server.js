@@ -11,7 +11,6 @@ app.engine('js', (_, options, callback) => {
     callback(null, options.source);
 });
 
-// require('dotenv').config();
 // app.use(express.static('public', {
 //     setHeaders: (response, path, stat) => {
 //         if (path.endsWith('js')) {
@@ -26,7 +25,7 @@ app.listen(PORT, HOST, () => {
     console.log(`Server has started on http://${HOST}:${PORT}`)
 })
 
-const database = new Datastore('./db/drawings.db');
+const database = new Datastore('db/drawings.db');
 database.loadDatabase();
 
 // #######################################################################

@@ -1,6 +1,6 @@
 FROM node
 # Set environment variables
-ENV api_key_chat=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
+ENV api_key_chat=$chat_key
 # Set the working directory
 WORKDIR /usr/src/app
 ARG ENVIRONMENT

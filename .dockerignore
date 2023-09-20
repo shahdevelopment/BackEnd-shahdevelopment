@@ -6,7 +6,7 @@ node_modules
 build_logs
 git-push.bat
 dev/notes
-.env
 template
+.gitignore
 
 # Specific:
