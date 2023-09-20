@@ -1,18 +1,9 @@
 const express = require('express');
 const Datastore = require('nedb');
-const S3Adapter = require('./s3Adapter');
 
 const app = express()
 const PORT = 9000
 const HOST = '0.0.0.0';
-
-const db = new Datastore({
-    filename: 'drawings.db',
-    autoload: true,
-    storage: new S3Adapter({
-        bucket: 's3://kubedevops001/kube_pv/drawings.db'
-    }),
-});
 
 // Set the MIME type for JavaScript files
 app.set('view engine', 'js');
@@ -34,6 +25,9 @@ app.use(express.json({ limit: '1mb' }));
 app.listen(PORT, HOST, () => {
     console.log(`Server has started on http://${HOST}:${PORT}`)
 })
+
+const database = new Datastore('./db/drawings.db');
+database.loadDatabase();
 
 // #######################################################################
 app.get('/chat', (req, res) => {
