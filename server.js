@@ -11,22 +11,14 @@ app.engine('js', (_, options, callback) => {
     callback(null, options.source);
 });
 
-// app.use(express.static('public', {
-//     setHeaders: (response, path, stat) => {
-//         if (path.endsWith('js')) {
-//             response.setHeader('Content-Type', 'application/javascript');
-//         }
-//     }
-// }));
-
 app.use(express.json({ limit: '1mb' }));
 
 app.listen(PORT, HOST, () => {
     console.log(`Server has started on http://${HOST}:${PORT}`)
 })
 
-const database = new Datastore('db/drawings.db');
-database.loadDatabase();
+const db = new Datastore('./db/drawings.db');
+db.loadDatabase();
 
 // #######################################################################
 app.get('/chat', (req, res) => {
