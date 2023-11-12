@@ -5,13 +5,17 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js && node worker.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "amqplib": "^0.10.3",
     "express": "^4.18.2",
-    "nedb": "^1.8.0"
+    "nedb": "^1.8.0",
+    "pg": "^8.11.3",
+    "sequelize": "^6.33.0",
+    "stompjs": "^2.3.3"
   }
 }

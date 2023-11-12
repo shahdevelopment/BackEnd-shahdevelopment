@@ -7,6 +7,29 @@ WORKDIR /usr/src/app
 ARG ENVIRONMENT
 RUN apt-get update
 
+ARG postgresPass
+ENV POSTGRES_PASSWORD="$postgresPass"
+
+ARG postgresUser
+ENV POSTGRES_USER="$postgresUser"
+
+ARG postgresDb
+ENV POSTGRES_DB="$postgresDb"
+
+ARG postgresHost
+ENV POSTGRES_HOST="$postgresHost"
+
+ARG rabbitmqUser
+ENV RABBITMQ_DEFAULT_USER="$rabbitmqUser"
+
+ARG rabbitmqPass
+ENV RABBITMQ_DEFAULT_PASS="$rabbitmqPass"
+
+ARG RABBIT_MQ_HOST
+ENV RABBIT_MQ_HOST="$rabbitmq_host"
+
+
+
 RUN apt-get install ca-certificates && apt autoremove
 
 COPY package*.json .
@@ -20,4 +43,4 @@ EXPOSE 9000
 # ADD requirements.txt ./
 COPY . .
 
-CMD ["node", "server.js"]
+CMD ["npm", "start"]
