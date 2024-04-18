@@ -1,4 +1,5 @@
-FROM node:21-alpine3.18
+FROM node:lts-alpine3.18
+
 # Set environment variables
 ARG chat_key
 ENV api_key_chat="$chat_key"
