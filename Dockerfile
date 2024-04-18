@@ -10,5 +10,5 @@ COPY package*.json .
 # RUN npm install axios && npm ci --only=production
 RUN if [ "$ENVIRONMENT" = "dev" ]; then npm install axios && npm install fs; else npm install --only=production && npm cache clean --force; fi
 COPY . .
-
+EXPOSE 9000
 CMD ["node", "server.js"]
