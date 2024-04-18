@@ -5,9 +5,14 @@ ENV api_key_chat="$chat_key"
 # Set the working directory
 WORKDIR /usr/src/app
 ARG ENVIRONMENT
-RUN apk update
+# Install deps
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache bash git openssh
 
-RUN apk install ca-certificates && apk autoremove
+# Create Certificate
+RUN apk add --no-cache ca-certificates && \
+    apk del --no-cache .build-deps
 
 COPY package*.json .
 # RUN npm install
