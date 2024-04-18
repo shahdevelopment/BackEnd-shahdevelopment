@@ -1,8 +1,8 @@
-FROM node:lts-slim
+FROM node:slim
 
 ARG chat_key
-ARG ENVIRONMENT
 ENV api_key_chat="$chat_key"
+ARG ENVIRONMENT
 WORKDIR /usr/src/app
 RUN apt update
 RUN apt install ca-certificates && apt autoremove
