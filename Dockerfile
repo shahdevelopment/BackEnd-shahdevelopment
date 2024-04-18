@@ -7,8 +7,10 @@ ENV api_key_chat="$chat_key"
 WORKDIR /usr/src/app
 ARG ENVIRONMENT
 # Install deps
-RUN apt update
-RUN apt install ca-certificates && apt autoremove
+# Install dependencies
+RUN apk update && \
+    apk add --no-cache ca-certificates && \
+    apk del --no-cache .build-deps
 
 # RUN npm install
 # If you are building your code for production
