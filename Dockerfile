@@ -5,9 +5,9 @@ ENV api_key_chat="$chat_key"
 # Set the working directory
 WORKDIR /usr/src/app
 ARG ENVIRONMENT
-RUN apt-get update
+RUN apk update
 
-RUN apt-get install ca-certificates && apt autoremove
+RUN apk install ca-certificates && apt autoremove
 
 COPY package*.json .
 # RUN npm install
