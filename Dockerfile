@@ -1,5 +1,4 @@
-FROM node:lts-alpine3.18
-
+FROM node
 # Set environment variables
 ARG chat_key
 ENV api_key_chat="$chat_key"
@@ -8,18 +7,16 @@ WORKDIR /usr/src/app
 ARG ENVIRONMENT
 # Install deps
 # Install dependencies
-RUN apk update && \
-    apk add --no-cache ca-certificates && \
-    apk del --no-cache .build-deps
-
-# RUN npm install
+# Install deps
+RUN apt update
+RUN apt install ca-certificates && apt autoremove
 # If you are building your code for production
 
 COPY package*.json .
 
 # RUN npm install axios && npm ci --only=production
 RUN if [ "$ENVIRONMENT" = "dev" ]; then npm install axios && npm install fs; else npm install --only=production; fi
-EXPOSE 9000
+# EXPOSE 9000
 
 # USER node
 
