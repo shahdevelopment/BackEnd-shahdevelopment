@@ -1,18 +1,14 @@
-FROM alpine:3.18
+FROM node:18-alpine3.15
+
 # Set environment variables
 ARG chat_key
 ENV api_key_chat="$chat_key"
 # Set the working directory
 WORKDIR /usr/src/app
-ARG ENVIRONMENT
-# Install deps
-RUN apk update && \
-    apk upgrade && \
-    apk add --no-cache bash git openssh
+# ARG ENVIRONMENT
+RUN apt update
 
-# Create Certificate
-RUN apk add --no-cache ca-certificates && \
-    apk del --no-cache .build-deps
+RUN apt install ca-certificates && apt autoremove
 
 COPY package*.json .
 # RUN npm install
