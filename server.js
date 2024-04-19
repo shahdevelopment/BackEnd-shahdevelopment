@@ -1,6 +1,6 @@
 const express = require('express');
 const Datastore = require('nedb');
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 const app = express()
 const PORT = 9000
