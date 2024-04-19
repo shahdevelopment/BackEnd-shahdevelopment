@@ -24,16 +24,15 @@ db.loadDatabase();
 // #######################################################################
 app.post('/chat', (req, res) => {
     const apiKey = process.env.api_key_chat;
-    const question = req.body.question;
+    const question = req.body;
     const options = {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${apiKey}`,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ model: "text-davinci-003", prompt: question })
+        body: question
     };
-
     fetch('https://api.openai.com/v1/chat/completions', options)
         .then(response => {
             if (response.ok) {
@@ -49,7 +48,6 @@ app.post('/chat', (req, res) => {
         .catch(error => {
             res.status(500).json({ error: error.message }); // Handle any errors and send an error response
         });
-
 })
 app.get('/api', (req, res) => {
     db.find({}, (err, data) => {
