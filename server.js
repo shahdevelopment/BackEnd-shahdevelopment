@@ -31,7 +31,7 @@ app.post('/chat', (req, res) => {
             'Authorization': `Bearer ${apiKey}`,
             'Content-Type': 'application/json'
         },
-        body: question
+        body: JSON.stringify(question)
     };
     fetch('https://api.openai.com/v1/chat/completions', options)
         .then(response => {
