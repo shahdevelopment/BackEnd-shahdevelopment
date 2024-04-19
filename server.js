@@ -1,5 +1,6 @@
 const express = require('express');
 const Datastore = require('nedb');
+const fetch = require('node-fetch');
 
 const app = express()
 const PORT = 9000
@@ -21,9 +22,34 @@ const db = new Datastore('./db/drawings.db');
 db.loadDatabase();
 
 // #######################################################################
-app.get('/chat', (req, res) => {
+app.post('/chat', (req, res) => {
     const apiKey = process.env.api_key_chat;
-    res.status(200).json({ info: apiKey })
+    const question = req.body.question;
+    const options = {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ model: "text-davinci-003", prompt: question })
+    };
+
+    fetch('https://api.openai.com/v1/chat/completions', options)
+        .then(response => {
+            if (response.ok) {
+                // return response.json();
+                return response.json()
+            } else {
+                throw new Error('Error: ' + response.status);
+            }
+        })
+        .then(data => {
+            res.status(200).json(data); // Send the response to the requester
+        })
+        .catch(error => {
+            res.status(500).json({ error: error.message }); // Handle any errors and send an error response
+        });
+
 })
 app.get('/api', (req, res) => {
     db.find({}, (err, data) => {
