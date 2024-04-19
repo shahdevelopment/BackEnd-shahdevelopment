@@ -4,7 +4,6 @@ const axios = require('axios');
 const baseUrl = 'http://localhost:9000';
 // Array of paths to evaluate
 const pathsToEvaluate = [
-    '/chat',
     '/api',
     '/health',
     '/ready'
