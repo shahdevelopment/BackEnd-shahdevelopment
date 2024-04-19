@@ -1,5 +1,5 @@
-const express = require('express');
-const Datastore = require('nedb');
+import express from 'express';
+import Datastore from 'nedb';
 import fetch from 'node-fetch';
 
 const app = express()
