@@ -1,10 +1,15 @@
 import express from 'express';
 import Datastore from 'nedb';
 import fetch from 'node-fetch';
+// import cors from 'cors';
+import sgMail from '@sendgrid/mail';
 
 const app = express()
 const PORT = 9000
 const HOST = '0.0.0.0';
+
+// app.use(cors());
+
 
 // Set the MIME type for JavaScript files
 app.set('view engine', 'js');
@@ -57,6 +62,56 @@ app.get('/api', (req, res) => {
         }
         res.json(data);
     });
+});
+app.post('/email', (req, res) => {
+    const key = process.env.api_email_key
+    sgMail.setApiKey(key)
+    const booking = req.body.formDataObject
+    console.log(req.body.formDataObject.name)
+    const msg = {
+        from: 'shahjehan737@gmail.com',
+        to: booking.email,
+        subject: `Booking for ${booking.mail} on ${booking.date} at ${booking.time}`,
+        text: `Your booking has been confirmed and we have noted your message: "${booking.message}"`,
+        html: `
+            <p>Hello ${booking.name},</p>
+            <p>Date: ${booking.date}</p>
+            <p>Time: ${booking.time}</p>
+            <p>Contact: ${booking.email}</p>
+            <p>Message: ${booking.message}</p>
+        `    
+    };
+    sgMail
+      .send(msg)
+      .then(() => {
+        console.log('Email sent')
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+    const reciept = {
+        from: 'shahjehan737@gmail.com',
+        to: 'shahjehan737@gmail.com',
+        subject: `Booking for ${booking.name} on ${booking.date} at ${booking.time}`,
+        text: `Booking has been requested by ${booking.name}!Contact Email'
+        we have noted your message: ${booking.message}`,
+        html: `
+            <p>Hello booking has been  ${booking.name},</p>
+            <p>This is a test email sent from Node.js using SendGrid.</p>
+            <p>Date: ${booking.date}</p>
+            <p>Time: ${booking.time}</p>
+            <p>Contact: ${booking.email}</p>
+            <p>Message: ${booking.message}</p>
+        `
+    };
+    sgMail
+    .send(reciept)
+    .then(() => {
+      console.log('Email sent')
+    })
+    .catch((error) => {
+      console.error(error)
+    })
 });
 app.post('/api', (req, res) => {
     const data = req.body;

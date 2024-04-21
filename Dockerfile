@@ -2,6 +2,7 @@ FROM node
 
 ARG chat_key
 ENV api_key_chat="$chat_key"
+ENV api_email_key="$email_key"
 ARG ENVIRONMENT
 WORKDIR /usr/src/app
 RUN apt-get update
