@@ -74,11 +74,11 @@ app.post('/email', (req, res) => {
         subject: `Booking for ${booking.mail} on ${booking.date} at ${booking.time}`,
         text: `Your booking has been confirmed and we have noted your message: "${booking.message}"`,
         html: `
-            <p>Hello ${booking.name},</p>
+            <p>Hello ${booking.name}, your booking request has been sent!</p>
             <p>Date: ${booking.date}</p>
             <p>Time: ${booking.time}</p>
-            <p>Contact: ${booking.email}</p>
-            <p>Message: ${booking.message}</p>
+            <p>Contact: shahjehan-solehria@hotmail.com</p>
+            <p>Your message: ${booking.message}</p>
         `    
     };
     sgMail
