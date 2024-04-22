@@ -71,7 +71,7 @@ app.post('/email', (req, res) => {
     const msg = {
         from: 'shahjehan737@gmail.com',
         to: booking.email,
-        subject: `Booking for ${booking.mail} on ${booking.date} at ${booking.time}`,
+        subject: `Booking for ${booking.email} on ${booking.date} at ${booking.time}`,
         text: `Your booking has been confirmed and we have noted your message: "${booking.message}"`,
         html: `
             <p>Hello ${booking.name}, your booking request has been sent!</p>
