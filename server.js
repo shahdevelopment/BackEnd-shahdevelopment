@@ -9,13 +9,7 @@ const PORT = 9000
 const HOST = '0.0.0.0';
 
 // app.use(cors());
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*'); // Allow requests from any origin
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // Allowed HTTP methods
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization'); // Allowed headers
-    res.setHeader('Access-Control-Allow-Credentials', true); // Allow credentials (e.g., cookies)
-    next();
-  });
+
 
 // Set the MIME type for JavaScript files
 app.set('view engine', 'js');
