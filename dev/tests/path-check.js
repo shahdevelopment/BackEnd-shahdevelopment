@@ -1,5 +1,5 @@
-const fs = require('fs');
-const axios = require('axios');
+import fs from 'fs';
+import axios from 'axios';
 // Base URL of your Node.js application running on the container
 const baseUrl = 'http://localhost:9000';
 // Array of paths to evaluate
