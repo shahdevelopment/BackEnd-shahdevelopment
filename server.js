@@ -1,7 +1,7 @@
 import express from 'express';
 import Datastore from 'nedb';
 import fetch from 'node-fetch';
-import cors from 'cors';
+// import cors from 'cors';
 import sgMail from '@sendgrid/mail';
 import { Sequelize, DataTypes } from 'sequelize';
 
@@ -43,7 +43,7 @@ const app = express()
 const PORT = 9000
 const HOST = '0.0.0.0';
 
-app.use(cors());
+// app.use(cors());
 
 
 // Set the MIME type for JavaScript files
