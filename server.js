@@ -1,5 +1,5 @@
 import express from 'express';
-import Datastore from 'nedb';
+// import Datastore from 'nedb';
 import fetch from 'node-fetch';
 // import cors from 'cors';
 import sgMail from '@sendgrid/mail';
@@ -58,8 +58,8 @@ app.listen(PORT, HOST, () => {
     console.log(`Server has started on http://${HOST}:${PORT}`)
 })
 
-const db = new Datastore('./db/drawings.db');
-db.loadDatabase();
+// const db = new Datastore('./db/drawings.db');
+// db.loadDatabase();
 
 // #######################################################################
 app.post('/chat', (req, res) => {
