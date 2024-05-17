@@ -8,9 +8,10 @@ import { Sequelize, DataTypes } from 'sequelize';
 const pgDb = process.env.POSTGRES_DB;
 const pgUser = process.env.POSTGRES_USER;
 const pgPass = process.env.POSTGRES_PASSWORD;
+const pgHost = process.env.DB_HOST;
 
 // Initialize Sequelize with your database connection
-const sequelize = new Sequelize(`${pgDb}`, `${pgUser}`, `${pgPass}`, {host: 'db-service.profile-site.svc.cluster.local', dialect: 'postgres'});
+const sequelize = new Sequelize(`${pgDb}`, `${pgUser}`, `${pgPass}`, {host: `${pgHost}`, dialect: 'postgres'});
 
 // Define your model
 const MyTable = sequelize.define('my_table', {
