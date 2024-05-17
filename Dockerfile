@@ -4,7 +4,15 @@ ARG chat_key
 ENV api_key_chat="$chat_key"
 ARG email_key
 ENV api_email_key="$email_key"
+ARG pg_user
+ENV POSTGRES_USER="$pg_user"
+ARG pg_pass
+ENV POSTGRES_PASSWORD="$pg_pass"
+ARG pg_db
+ENV POSTGRES_DB="$pg_db"
 ARG ENVIRONMENT
+
+
 
 WORKDIR /usr/src/app
 
