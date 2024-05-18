@@ -10,6 +10,9 @@ ARG pg_pass
 ENV POSTGRES_PASSWORD="$pg_pass"
 ARG pg_db
 ENV POSTGRES_DB="$pg_db"
+ARG pg_host
+ENV DB_HOST="$pg_host"
+
 ARG ENVIRONMENT
 
 
