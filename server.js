@@ -8,7 +8,7 @@ import { Sequelize, DataTypes } from 'sequelize';
 const pgDb = process.env.POSTGRES_DB;
 const pgUser = process.env.POSTGRES_USER;
 const pgPass = process.env.POSTGRES_PASSWORD;
-// const pgHost = process.env.DB_HOST;
+const pgHost = process.env.DB_HOST;
 
 // Initialize Sequelize with your database connection
 const sequelize = new Sequelize(`${pgDb}`, `${pgUser}`, `${pgPass}`, {host: `${pgHost}`, dialect: 'postgres'});
