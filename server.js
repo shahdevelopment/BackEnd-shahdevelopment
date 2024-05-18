@@ -11,9 +11,8 @@ const pgPass = process.env.POSTGRES_PASSWORD;
 const pgHost = process.env.DB_HOST;
 
 // Initialize Sequelize with your database connection
-const sequelize = new Sequelize(`${pgDb}`, `${pgUser}`, `${pgPass}`, {host: `${pgHost}`, dialect: 'postgres'});
+const sequelize = new Sequelize(`${pgDb}`, `${pgUser}`, `${pgPass}`, {host: `${pgHost}`, port: 443, dialect: 'postgres', dialectOptions: {ssl: {rejectUnauthorized: false},},});
 
-// Define your model
 const MyTable = sequelize.define('my_table', {
   _id: {
     type: DataTypes.INTEGER,
