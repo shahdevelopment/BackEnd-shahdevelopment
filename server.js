@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import cookieParser from 'cookie-parser';
 // DevTools ------------------------------------------- //
-import cors from 'cors';
+// import cors from 'cors';
 // import dotenv from 'dotenv';
 // dotenv.config();
 // ---------------------------------------------------- //
