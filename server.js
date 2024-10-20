@@ -19,7 +19,6 @@ const pgHost = process.env.DB_HOST;
 const JWT_SECRET = process.env.JWT_SECRET;
 const admin_email = process.env.ADMIN_EMAIL;
 const cors_url = process.env.CORS_URL;
-const front_url = process.env.FRONT_URL;
 
 // Initialize Sequelize with your database connection
 const sequelize = new Sequelize(`${pgDb}`, `${pgUser}`, `${pgPass}`, {host: `${pgHost}`, port: 5432, dialect: 'postgres', dialectOptions: {connectTimeout: 60000}});
