@@ -1,13 +1,16 @@
 import express from 'express';
-// import Datastore from 'nedb';
 import fetch from 'node-fetch';
-// import cors from 'cors';
 import sgMail from '@sendgrid/mail';
 import { Sequelize, DataTypes, INTEGER } from 'sequelize';
-
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+
+// DevTools ------------------------------------------- //
 // import cors from 'cors';
+// import dotenv from 'dotenv';
+// dotenv.config();
+// ---------------------------------------------------- //
+// ---------------------------------------------------- //
 
 const pgDb = process.env.POSTGRES_DB;
 const pgUser = process.env.POSTGRES_USER;
@@ -15,6 +18,7 @@ const pgPass = process.env.POSTGRES_PASSWORD;
 const pgHost = process.env.DB_HOST;
 const JWT_SECRET = process.env.JWT_SECRET;
 const admin_email = process.env.ADMIN_EMAIL;
+const cors_url = process.env.CORS_URL;
 
 // Initialize Sequelize with your database connection
 const sequelize = new Sequelize(`${pgDb}`, `${pgUser}`, `${pgPass}`, {host: `${pgHost}`, port: 5432, dialect: 'postgres', dialectOptions: {connectTimeout: 60000}});
@@ -74,16 +78,17 @@ const app = express()
 const PORT = 9000
 const HOST = '0.0.0.0';
 
+// DevTools ------------------------------------------- //
 // app.use(cors());
-
 // const corsOptions = {
-//   origin: 'http://localhost:3000', // Replace with your frontend domain
+//   origin: `${cors_url}`, // Replace with your frontend domain
 //   optionsSuccessStatus: 200,
 //   methods: ['GET', 'POST'],
 //   allowedHeaders: ['Content-Type', 'Authorization']
 // };
-
 // app.use(cors(corsOptions));
+// ---------------------------------------------------- //
+// ---------------------------------------------------- //
 
 // Set the MIME type for JavaScript files
 app.set('view engine', 'js');
@@ -96,7 +101,6 @@ app.use(express.json({ limit: '1mb' }));
 app.listen(PORT, HOST, () => {
     console.log(`Server has started on http://${HOST}:${PORT}`)
 })
-
 app.post('/signup', async (req, res) => {
   const { email, password } = req.body;
   try {      
@@ -122,7 +126,6 @@ app.post('/signup', async (req, res) => {
       return res.status(500).json({ error: 'An error occurred while creating the user' });
   }
 });
-
 app.post('/jwtDecode', async (req, res) => {
   try {
     // console.log(req.body.token)
@@ -140,18 +143,6 @@ app.post('/jwtDecode', async (req, res) => {
     res.status(500).json({ message: 'Error Decoding' });
   }
 })
-// app.get('/check-auth', (req, res) => {
-//   const token = req.cookies.authToken; // Get token from cookie
-//   if (!token) {
-//       return res.status(401).json({ isAuthenticated: false, message: 'Unauthorized: No token provided' });
-//   }
-//   try {
-//       const verified = jwt.verify(token, JWT_SECRET); // Verify the token
-//       return res.json({ isAuthenticated: true, user: verified });
-//   } catch (err) {
-//       return res.status(401).json({ isAuthenticated: false, message: 'Unauthorized: Invalid token' });
-//   }
-// });
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -180,9 +171,6 @@ app.post('/login', async (req, res) => {
     res.status(500).json({ message: 'User Does Not Exist!' });
   }
 });
-// const db = new Datastore('./db/drawings.db');
-// db.loadDatabase();
-// #######################################################################
 app.post('/chat', (req, res) => {
     const apiKey = process.env.api_key_chat;
     const question = req.body;
