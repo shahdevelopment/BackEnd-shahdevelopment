@@ -4,9 +4,9 @@ import sgMail from '@sendgrid/mail';
 import { Sequelize, DataTypes, INTEGER } from 'sequelize';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-
+import cookieParser from 'cookie-parser';
 // DevTools ------------------------------------------- //
-// import cors from 'cors';
+import cors from 'cors';
 // import dotenv from 'dotenv';
 // dotenv.config();
 // ---------------------------------------------------- //
@@ -19,6 +19,7 @@ const pgHost = process.env.DB_HOST;
 const JWT_SECRET = process.env.JWT_SECRET;
 const admin_email = process.env.ADMIN_EMAIL;
 const cors_url = process.env.CORS_URL;
+const front_url = process.env.FRONT_URL;
 
 // Initialize Sequelize with your database connection
 const sequelize = new Sequelize(`${pgDb}`, `${pgUser}`, `${pgPass}`, {host: `${pgHost}`, port: 5432, dialect: 'postgres', dialectOptions: {connectTimeout: 60000}});
@@ -78,6 +79,14 @@ const app = express()
 const PORT = 9000
 const HOST = '0.0.0.0';
 
+// CORS configuration
+const corsOptions = {
+  origin: cors_url,  // Replace with your frontend domain
+  credentials: true  // Allows credentials (cookies, HTTP authentication)
+};
+app.use(cors(corsOptions));
+app.use(cookieParser());
+
 // DevTools ------------------------------------------- //
 // app.use(cors());
 // const corsOptions = {
@@ -130,15 +139,13 @@ app.post('/jwtDecode', async (req, res) => {
   try {
     // console.log(req.body.token)
     const token = req.body.token;
+    // const token = req.body.token;
     const decoded = jwt.verify(token, JWT_SECRET);
     const userId = decoded.email;  // This depends on how the token was signed
     const record = await usersTable.findOne({ where: { email: userId } });
     const id = record._id;
-    console.log(id)
     return res.json({ message: 'User ID Found', id });
-
   } catch (error) {
-    // If an error occurs, respond with an error message
     console.error('Error Decoding:', error);
     res.status(500).json({ message: 'Error Decoding' });
   }

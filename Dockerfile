@@ -16,6 +16,8 @@ ARG jwt_secret
 ENV JWT_SECRET="$jwt_secret"
 ARG admin_email
 ENV ADMIN_EMAIL="$admin_email"
+ARG front_url
+ENV FRONT_URL="$front_url"
 
 ARG ENVIRONMENT
 
