@@ -18,7 +18,7 @@ const pgPass = process.env.POSTGRES_PASSWORD;
 const pgHost = process.env.DB_HOST;
 const JWT_SECRET = process.env.JWT_SECRET;
 const admin_email = process.env.ADMIN_EMAIL;
-const cors_url = process.env.CORS_URL;
+// const cors_url = process.env.CORS_URL;
 
 // Initialize Sequelize with your database connection
 const sequelize = new Sequelize(`${pgDb}`, `${pgUser}`, `${pgPass}`, {host: `${pgHost}`, port: 5432, dialect: 'postgres', dialectOptions: {connectTimeout: 60000}});
@@ -78,12 +78,12 @@ const app = express()
 const PORT = 9000
 const HOST = '0.0.0.0';
 
-// CORS configuration
-const corsOptions = {
-  origin: cors_url,  // Replace with your frontend domain
-  credentials: true  // Allows credentials (cookies, HTTP authentication)
-};
-app.use(cors(corsOptions));
+// // CORS configuration
+// const corsOptions = {
+//   origin: cors_url,  // Replace with your frontend domain
+//   credentials: true  // Allows credentials (cookies, HTTP authentication)
+// };
+// app.use(cors(corsOptions));
 app.use(cookieParser());
 
 // DevTools ------------------------------------------- //

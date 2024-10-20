@@ -16,12 +16,8 @@ ARG jwt_secret
 ENV JWT_SECRET="$jwt_secret"
 ARG admin_email
 ENV ADMIN_EMAIL="$admin_email"
-ARG cors_url
-ENV CORS_URL="$cors_url"
 
 ARG ENVIRONMENT
-
-
 
 WORKDIR /usr/src/app
 
