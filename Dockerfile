@@ -12,6 +12,10 @@ ARG pg_db
 ENV POSTGRES_DB="$pg_db"
 ARG pg_host
 ENV DB_HOST="$pg_host"
+ARG jwt_secret
+ENV JWT_SECRET="$jwt_secret"
+ARG admin_email
+ENV ADMIN_EMAIL="$admin_email"
 
 ARG ENVIRONMENT
 

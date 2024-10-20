@@ -2,11 +2,11 @@
 FROM postgres:alpine
 
 
-ARG pg_user
+ARG pg_user=defaultPass
 ENV POSTGRES_USER="$pg_user"
-ARG pg_pass
+ARG pg_pass=defaultUser
 ENV POSTGRES_PASSWORD="$pg_pass"
-ARG pg_db
+ARG pg_db=defaultDb
 ENV POSTGRES_DB="$pg_db"
 
 
