@@ -83,7 +83,7 @@ const HOST = '0.0.0.0';
 //   allowedHeaders: ['Content-Type', 'Authorization']
 // };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 // Set the MIME type for JavaScript files
 app.set('view engine', 'js');
