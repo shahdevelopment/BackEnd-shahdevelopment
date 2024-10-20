@@ -3,7 +3,7 @@ FROM node:lts-alpine3.18
 ARG chat_key
 ENV api_key_chat="$chat_key"
 ARG email_key
-ENV api_email_key="$email_key"
+ENV EMAIL_KEY="$email_key"
 ARG pg_user
 ENV POSTGRES_USER="$pg_user"
 ARG pg_pass

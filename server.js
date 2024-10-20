@@ -18,6 +18,7 @@ const pgPass = process.env.POSTGRES_PASSWORD;
 const pgHost = process.env.DB_HOST;
 const JWT_SECRET = process.env.JWT_SECRET;
 const admin_email = process.env.ADMIN_EMAIL;
+const key = process.env.EMAIL_KEY;
 // const cors_url = process.env.CORS_URL;
 
 // Initialize Sequelize with your database connection
@@ -230,7 +231,6 @@ app.get('/api/:userId', async (req, res) => {
     // });
 });
 app.post('/email', (req, res) => {
-    const key = process.env.api_email_key
     sgMail.setApiKey(key)
     const booking = req.body.formDataObject
     console.log(req.body.formDataObject.name)
