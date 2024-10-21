@@ -224,7 +224,7 @@ app.get('/api/:userId', async (req, res) => {
 });
 app.post('/email', (req, res) => {
     console.log(key);
-    sgMail.setApiKey(`${key}`)
+    sgMail.setApiKey(key)
     const booking = req.body.formDataObject
     console.log(req.body.formDataObject.name)
     const msg = {
