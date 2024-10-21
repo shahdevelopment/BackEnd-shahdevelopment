@@ -6,14 +6,6 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import cookieParser from 'cookie-parser';
 
-// DevTools ------------------------------------------- //
-// import cors from 'cors';
-// import dotenv from 'dotenv';
-// dotenv.config();
-// const cors_url = process.env.CORS_URL;
-// ---------------------------------------------------- //
-// ---------------------------------------------------- //
-
 const pgDb = process.env.POSTGRES_DB;
 const pgUser = process.env.POSTGRES_USER;
 const pgPass = process.env.POSTGRES_PASSWORD;
@@ -21,6 +13,26 @@ const pgHost = process.env.DB_HOST;
 const JWT_SECRET = process.env.JWT_SECRET;
 const admin_email = process.env.ADMIN_EMAIL;
 const key = process.env.EMAIL_KEY;
+const app = express()
+const PORT = 9000
+const HOST = '0.0.0.0';
+
+// DevTools ------------------------------------------- //
+// import cors from 'cors';
+// import dotenv from 'dotenv';
+// dotenv.config();
+// const cors_url = process.env.CORS_URL;
+// app.use(cors());
+// const corsOptions = {
+//   origin: `${cors_url}`, // Replace with your frontend domain
+//   credentials: true,
+//   optionsSuccessStatus: 200,
+//   methods: ['GET', 'POST'],
+//   allowedHeaders: ['Content-Type', 'Authorization']
+// };
+// app.use(cors(corsOptions));
+// ---------------------------------------------------- //
+// ---------------------------------------------------- //
 
 // Initialize Sequelize with your database connection
 const sequelize = new Sequelize(`${pgDb}`, `${pgUser}`, `${pgPass}`, {host: `${pgHost}`, port: 5432, dialect: 'postgres', dialectOptions: {connectTimeout: 60000}});
@@ -76,24 +88,8 @@ sequelize.sync({ alter: false }).then(() => {
   console.error('Error creating table:', err);
 });
 
-const app = express()
-const PORT = 9000
-const HOST = '0.0.0.0';
-
 app.use(cookieParser());
 
-// DevTools ------------------------------------------- //
-// app.use(cors());
-// const corsOptions = {
-//   origin: `${cors_url}`, // Replace with your frontend domain
-//   credentials: true,
-//   optionsSuccessStatus: 200,
-//   methods: ['GET', 'POST'],
-//   allowedHeaders: ['Content-Type', 'Authorization']
-// };
-// app.use(cors(corsOptions));
-// ---------------------------------------------------- //
-// ---------------------------------------------------- //
 
 // Set the MIME type for JavaScript files
 app.set('view engine', 'js');
