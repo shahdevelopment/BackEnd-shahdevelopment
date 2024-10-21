@@ -5,10 +5,12 @@ import { Sequelize, DataTypes, INTEGER } from 'sequelize';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import cookieParser from 'cookie-parser';
+
 // DevTools ------------------------------------------- //
 // import cors from 'cors';
 // import dotenv from 'dotenv';
 // dotenv.config();
+// const cors_url = process.env.CORS_URL;
 // ---------------------------------------------------- //
 // ---------------------------------------------------- //
 
@@ -19,7 +21,6 @@ const pgHost = process.env.DB_HOST;
 const JWT_SECRET = process.env.JWT_SECRET;
 const admin_email = process.env.ADMIN_EMAIL;
 const key = process.env.EMAIL_KEY;
-// const cors_url = process.env.CORS_URL;
 
 // Initialize Sequelize with your database connection
 const sequelize = new Sequelize(`${pgDb}`, `${pgUser}`, `${pgPass}`, {host: `${pgHost}`, port: 5432, dialect: 'postgres', dialectOptions: {connectTimeout: 60000}});
@@ -79,18 +80,13 @@ const app = express()
 const PORT = 9000
 const HOST = '0.0.0.0';
 
-// // CORS configuration
-// const corsOptions = {
-//   origin: cors_url,  // Replace with your frontend domain
-//   credentials: true  // Allows credentials (cookies, HTTP authentication)
-// };
-// app.use(cors(corsOptions));
 app.use(cookieParser());
 
 // DevTools ------------------------------------------- //
 // app.use(cors());
 // const corsOptions = {
 //   origin: `${cors_url}`, // Replace with your frontend domain
+//   credentials: true,
 //   optionsSuccessStatus: 200,
 //   methods: ['GET', 'POST'],
 //   allowedHeaders: ['Content-Type', 'Authorization']
@@ -231,7 +227,8 @@ app.get('/api/:userId', async (req, res) => {
     // });
 });
 app.post('/email', (req, res) => {
-    sgMail.setApiKey(key)
+    console.log(key);
+    sgMail.setApiKey(`${key}`)
     const booking = req.body.formDataObject
     console.log(req.body.formDataObject.name)
     const msg = {
