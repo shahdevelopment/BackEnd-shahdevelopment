@@ -228,7 +228,7 @@ app.post('/email', (req, res) => {
     const booking = req.body.formDataObject
     console.log(req.body.formDataObject.name)
     const msg = {
-        from: `${admin_email}`,
+        from: admin_email,
         to: booking.email,
         subject: `Booking for ${booking.email} on ${booking.date} at ${booking.time}`,
         text: `Your booking has been confirmed and we have noted your message: "${booking.message}"`,
@@ -249,8 +249,8 @@ app.post('/email', (req, res) => {
         console.error(error)
       })
     const reciept = {
-        from: `${admin_email}`,
-        to: `${admin_email}`,
+        from: admin_email,
+        to: admin_email,
         subject: `Booking for ${booking.name} on ${booking.date} at ${booking.time}`,
         text: `Booking has been requested by ${booking.name}!Contact Email'
         we have noted your message: ${booking.message}`,
