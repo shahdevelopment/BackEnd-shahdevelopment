@@ -5,6 +5,12 @@ import { Sequelize, DataTypes, INTEGER } from 'sequelize';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import cookieParser from 'cookie-parser';
+// DevTools ------------------------------------------- //
+// import cors from 'cors';
+// import dotenv from 'dotenv';
+// dotenv.config();
+// ---------------------------------------------------- //
+// ---------------------------------------------------- //
 
 const pgDb = process.env.POSTGRES_DB;
 const pgUser = process.env.POSTGRES_USER;
@@ -18,31 +24,38 @@ const PORT = 9000
 const HOST = '0.0.0.0';
 
 // DevTools ------------------------------------------- //
-// import cors from 'cors';
-// import dotenv from 'dotenv';
-// dotenv.config();
 // const cors_url = process.env.CORS_URL;
-// app.use(cors());
-// const corsOptions = {
-//   origin: `${cors_url}`, // Replace with your frontend domain
-//   credentials: true,
-//   optionsSuccessStatus: 200,
-//   methods: ['GET', 'POST'],
-//   allowedHeaders: ['Content-Type', 'Authorization']
-// };
-// app.use(cors(corsOptions));
+// app.use((req, res, next) => {
+//   res.set('Access-Control-Allow-Origin', `${cors_url}`);
+//   res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+//   res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//   res.set('Access-Control-Allow-Credentials', 'true'); // Allow credentials
+//   res.set('Vary', 'Origin'); // Add the Vary header
+//   next(); // Proceed to the next middleware or route handler
+// });
 // ---------------------------------------------------- //
 // ---------------------------------------------------- //
+
+app.use(cookieParser());
+app.use(express.json({ limit: '1mb' }));
+
+// Set the MIME type for JavaScript files
+app.set('view engine', 'js');
+app.engine('js', (_, options, callback) => {
+    callback(null, options.source);
+});
+
+app.listen(PORT, HOST, () => {
+    console.log(`Server has started on http://${HOST}:${PORT}`)
+})
 
 // Initialize Sequelize with your database connection
 const sequelize = new Sequelize(`${pgDb}`, `${pgUser}`, `${pgPass}`, {host: `${pgHost}`, port: 5432, dialect: 'postgres', dialectOptions: {connectTimeout: 60000}});
-
 sequelize.authenticate().then(() => {
   console.log('Connection has been established successfully.');
 }).catch(err => {
   console.log('Unable to connect to the database:', err);
 });
-
 const postsTable = sequelize.define('posts', {
   _id: {
     type: DataTypes.INTEGER,
@@ -65,7 +78,6 @@ const postsTable = sequelize.define('posts', {
     type: DataTypes.TEXT
   }
 });
-
 const usersTable = sequelize.define('users', {
   _id: {
     type: DataTypes.INTEGER,
@@ -80,7 +92,6 @@ const usersTable = sequelize.define('users', {
     type: DataTypes.TEXT
   }
 });
-
 // Sync the model with the database (create the table if it doesn't exist)
 sequelize.sync({ alter: false }).then(() => {
   console.log('Table created successfully.');
@@ -88,20 +99,6 @@ sequelize.sync({ alter: false }).then(() => {
   console.error('Error creating table:', err);
 });
 
-app.use(cookieParser());
-
-
-// Set the MIME type for JavaScript files
-app.set('view engine', 'js');
-app.engine('js', (_, options, callback) => {
-    callback(null, options.source);
-});
-
-app.use(express.json({ limit: '1mb' }));
-
-app.listen(PORT, HOST, () => {
-    console.log(`Server has started on http://${HOST}:${PORT}`)
-})
 app.post('/signup', async (req, res) => {
   const { email, password } = req.body;
   try {      
@@ -200,27 +197,13 @@ app.post('/chat', (req, res) => {
 app.get('/api/:userId', async (req, res) => {
     try {
         const userId = parseInt(req.params.userId, 10);
-    
-        // Retrieve all records from the database
         const records = await postsTable.findAll({ where: { userId: userId } });
-    
-        // Store the retrieved records in a variable
         const data = records.map(record => record.toJSON());
-    
-        // Respond with the retrieved records
         res.json(data);
       } catch (error) {
-        // If an error occurs, respond with an error message
         console.error('Error retrieving records:', error);
         res.status(500).json({ error: 'Error retrieving records' });
       }
-    // db.find({}, (err, data) => {
-    //     if (err) {
-    //         res.end();
-    //         return;
-    //     }
-    //     res.json(data);
-    // });
 });
 app.post('/email', (req, res) => {
     console.log(key);
@@ -361,4 +344,3 @@ app.get('/allPosts', async (req, res) => {
   //     res.json(data);
   // });
 });
-
