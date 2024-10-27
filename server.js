@@ -6,7 +6,6 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import cookieParser from 'cookie-parser';
 // DevTools ------------------------------------------- //
-// import cors from 'cors';
 // import dotenv from 'dotenv';
 // dotenv.config();
 // ---------------------------------------------------- //
@@ -38,6 +37,7 @@ const HOST = '0.0.0.0';
 
 app.use(cookieParser());
 app.use(express.json({ limit: '1mb' }));
+
 
 // Set the MIME type for JavaScript files
 app.set('view engine', 'js');
@@ -103,16 +103,9 @@ app.post('/signup', async (req, res) => {
   const { email, password } = req.body;
   try {      
       const record = await usersTable.findOne({ where: { email: email } });
-      // var userExists = record.email === email;
-      // console.log(userExists);
-      // let boolUserExists = Boolean(userExists);
-      // if (userExists === true) {
-      //   userExists = false;
-      // }
       if (record) {
         return res.status(409).json({ message: 'User Already Exists' });
       }
-
       const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
       const newUser = await usersTable.create({
           email: email,
@@ -206,37 +199,30 @@ app.get('/api/:userId', async (req, res) => {
       }
 });
 app.post('/email', (req, res) => {
-    console.log(key);
-    sgMail.setApiKey(key)
+    sgMail.setApiKey(`${key}`)
     const booking = req.body.formDataObject
-    console.log(req.body.formDataObject.name)
+    if (!booking.email || !booking.name || !booking.date || !booking.time) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
     const msg = {
         from: admin_email,
         to: booking.email,
-        subject: `Booking for ${booking.email} on ${booking.date} at ${booking.time}`,
-        text: `Your booking has been confirmed and we have noted your message: "${booking.message}"`,
+        subject: `Booking for ${booking.name} has been confirmed for ${booking.date}`,
+        text: `Please arrive at at ${booking.time}`,
         html: `
             <p>Hello ${booking.name}, your booking request has been sent!</p>
             <p>Date: ${booking.date}</p>
             <p>Time: ${booking.time}</p>
             <p>Contact: ${admin_email}</p>
             <p>Your message: ${booking.message}</p>
-        `    
+        `
     };
-    sgMail
-      .send(msg)
-      .then(() => {
-        console.log('Email sent')
-      })
-      .catch((error) => {
-        console.error(error)
-      })
     const reciept = {
         from: admin_email,
         to: admin_email,
-        subject: `Booking for ${booking.name} on ${booking.date} at ${booking.time}`,
-        text: `Booking has been requested by ${booking.name}!Contact Email'
-        we have noted your message: ${booking.message}`,
+        subject: `Booking request for ${booking.name} on ${booking.date} at ${booking.time}`,
+        text: `Booking has been requested by ${booking.name}`,
         html: `
             <p>Hello booking has been  ${booking.name},</p>
             <p>This is a test email sent from Node.js using SendGrid.</p>
@@ -246,14 +232,18 @@ app.post('/email', (req, res) => {
             <p>Message: ${booking.message}</p>
         `
     };
-    sgMail
-    .send(reciept)
+    Promise.all([
+      sgMail.send(msg),
+      sgMail.send(reciept)
+    ])
     .then(() => {
-      console.log('Email sent')
+        console.log('Emails sent successfully');
+        res.status(200).json({ message: 'Emails sent' });
     })
     .catch((error) => {
-      console.error(error)
-    })
+        console.error('Error sending emails:', error);
+        res.status(500).json({ error: 'Failed to send emails' });
+    });
 });
 app.post('/api', async (req, res) => {
     try {        
@@ -303,15 +293,6 @@ app.delete('/api/:id', async (req, res) => {
         console.error('Error deleting record:', error);
         res.status(500).json({ error: 'Error deleting record' });
       }
-    // db.remove({ _id: postId }, {}, (err, numRemoved) => {
-    //     if (err) {
-    //         console.error(`Error deleting post with ID ${postId}.`, err);
-    //         res.status(500).send(`Error deleting post with ID ${postId}.`);
-    //     } else {
-    //         console.log(`Post with ID ${postId} deleted.`);
-    //         res.sendStatus(200);
-    //     }
-    // });
 });
 app.get('/health', (req, res) => {
     const message = "Healthy!";
