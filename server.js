@@ -204,7 +204,6 @@ app.post('/email', (req, res) => {
     if (!booking.email || !booking.name || !booking.date || !booking.time) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
-
     const msg = {
         from: admin_email,
         to: booking.email,
@@ -241,7 +240,7 @@ app.post('/email', (req, res) => {
         res.status(200).json({ message: 'Emails sent' });
     })
     .catch((error) => {
-        console.error('Error sending emails:', error);
+        console.error('Error sending emails:', error.response.body);
         res.status(500).json({ error: 'Failed to send emails' });
     });
 });
