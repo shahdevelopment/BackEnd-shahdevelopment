@@ -49,13 +49,29 @@ app.listen(PORT, HOST, () => {
     console.log(`Server has started on http://${HOST}:${PORT}`)
 })
 
-// Initialize Sequelize with your database connection
-const sequelize = new Sequelize(`${pgDb}`, `${pgUser}`, `${pgPass}`, {host: `${pgHost}`, port: 5432, dialect: 'postgres', dialectOptions: {connectTimeout: 60000}});
-sequelize.authenticate().then(() => {
-  console.log('Connection has been established successfully.');
-}).catch(err => {
-  console.log('Unable to connect to the database:', err);
+const sequelize = new Sequelize(`${pgDb}`, `${pgUser}`, `${pgPass}`, {
+  host: `${pgHost}`,
+  port: 5432,
+  dialect: 'postgres',
+  dialectOptions: { connectTimeout: 60000 }
 });
+
+const connectWithRetry = async () => {
+  while (true) {
+    try {
+      await sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+      break; // Exit the loop if connection is successful
+    } catch (err) {
+      console.error('Unable to connect to the database:', err);
+      console.log('Retrying in 5 seconds...'); // Log retry message
+      await new Promise(res => setTimeout(res, 5000)); // Wait for 5 seconds before retrying
+    }
+  }
+};
+
+connectWithRetry();
+
 const postsTable = sequelize.define('posts', {
   _id: {
     type: DataTypes.INTEGER,
