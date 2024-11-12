@@ -5,9 +5,10 @@ import { Sequelize, DataTypes, INTEGER } from 'sequelize';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import cookieParser from 'cookie-parser';
+import client from 'prom-client';
 // DevTools ------------------------------------------- //
-// import dotenv from 'dotenv';
-// dotenv.config();
+import dotenv from 'dotenv';
+dotenv.config();
 // ---------------------------------------------------- //
 // ---------------------------------------------------- //
 
@@ -23,17 +24,31 @@ const PORT = 9000
 const HOST = '0.0.0.0';
 
 // DevTools ------------------------------------------- //
-// const cors_url = process.env.CORS_URL;
-// app.use((req, res, next) => {
-//   res.set('Access-Control-Allow-Origin', `${cors_url}`);
-//   res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-//   res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//   res.set('Access-Control-Allow-Credentials', 'true'); // Allow credentials
-//   res.set('Vary', 'Origin'); // Add the Vary header
-//   next(); // Proceed to the next middleware or route handler
-// });
+const cors_url = process.env.CORS_URL;
+app.use((req, res, next) => {
+  res.set('Access-Control-Allow-Origin', `${cors_url}`);
+  res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.set('Access-Control-Allow-Credentials', 'true'); // Allow credentials
+  res.set('Vary', 'Origin'); // Add the Vary header
+  next(); // Proceed to the next middleware or route handler
+});
 // ---------------------------------------------------- //
 // ---------------------------------------------------- //
+
+// Register a default metrics registry
+const register = new client.Registry();
+client.collectDefaultMetrics({ register });
+
+// Create a custom gauge metric example (modify as needed)
+const requestCounter = new client.Counter({
+  name: 'http_requests_total',
+  help: 'Total number of HTTP requests',
+});
+app.use((req, res, next) => {
+  requestCounter.inc();
+  next();
+});
 
 app.use(cookieParser());
 app.use(express.json({ limit: '1mb' }));
@@ -48,6 +63,14 @@ app.engine('js', (_, options, callback) => {
 app.listen(PORT, HOST, () => {
     console.log(`Server has started on http://${HOST}:${PORT}`)
 })
+
+// Initialize Sequelize with your database connection
+// const sequelize = new Sequelize(`${pgDb}`, `${pgUser}`, `${pgPass}`, {host: `${pgHost}`, port: 5432, dialect: 'postgres', dialectOptions: {connectTimeout: 60000}});
+// sequelize.authenticate().then(() => {
+//   console.log('Connection has been established successfully.');
+// }).catch(err => {
+//   console.log('Unable to connect to the database:', err);
+// });
 
 const sequelize = new Sequelize(`${pgDb}`, `${pgUser}`, `${pgPass}`, {
   host: `${pgHost}`,
@@ -115,6 +138,10 @@ sequelize.sync({ alter: false }).then(() => {
   console.error('Error creating table:', err);
 });
 
+app.get('/metrics', async (req, res) => {
+  res.set('Content-Type', register.contentType);
+  res.end(await register.metrics());
+});
 app.post('/signup', async (req, res) => {
   const { email, password } = req.body;
   try {      
