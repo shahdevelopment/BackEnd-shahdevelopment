@@ -7,8 +7,8 @@ import bcrypt from 'bcryptjs';
 import cookieParser from 'cookie-parser';
 import client from 'prom-client';
 // DevTools ------------------------------------------- //
-import dotenv from 'dotenv';
-dotenv.config();
+// import dotenv from 'dotenv';
+// dotenv.config();
 // ---------------------------------------------------- //
 // ---------------------------------------------------- //
 
@@ -24,15 +24,15 @@ const PORT = 9000
 const HOST = '0.0.0.0';
 
 // DevTools ------------------------------------------- //
-const cors_url = process.env.CORS_URL;
-app.use((req, res, next) => {
-  res.set('Access-Control-Allow-Origin', `${cors_url}`);
-  res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.set('Access-Control-Allow-Credentials', 'true'); // Allow credentials
-  res.set('Vary', 'Origin'); // Add the Vary header
-  next(); // Proceed to the next middleware or route handler
-});
+// const cors_url = process.env.CORS_URL;
+// app.use((req, res, next) => {
+//   res.set('Access-Control-Allow-Origin', `${cors_url}`);
+//   res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+//   res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//   res.set('Access-Control-Allow-Credentials', 'true'); // Allow credentials
+//   res.set('Vary', 'Origin'); // Add the Vary header
+//   next(); // Proceed to the next middleware or route handler
+// });
 // ---------------------------------------------------- //
 // ---------------------------------------------------- //
 
