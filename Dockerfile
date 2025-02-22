@@ -58,8 +58,8 @@ WORKDIR /usr/src/app
 
 RUN apk update \
     && apk add --no-cache ca-certificates \
-    && apk add --no-cache bash \
-    && apk add --no-cache curl \
+    # && apk add --no-cache bash \
+    # && apk add --no-cache curl \
     && rm -rf /var/cache/apk/*
 
 COPY package*.json ./
