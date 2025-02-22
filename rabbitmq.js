@@ -96,6 +96,14 @@ password: {
 }
 });
 
+// Sync the model with the database (create the table if it doesn't exist)
+sequelize.sync({ alter: false }).then(() => {
+  console.log('Table created successfully.');
+}).catch(err => {
+  console.error('Error creating table:', err);
+});
+
+
 // RabbitMQ Listener Configuration ------------------------------------------------------------//----------------------------
 const consumeMessages = async () => {
     try {
@@ -119,6 +127,7 @@ const consumeMessages = async () => {
         channel.consume(signupQueue, async (msg) => {
             if (msg !== null) {
                 const { email, password } = JSON.parse(msg.content.toString());
+
                 let response;
                 try {
                     if (!validator.isEmail(email)) {

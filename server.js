@@ -3,15 +3,15 @@ import express from 'express';
 // import { Sequelize, DataTypes, INTEGER } from 'sequelize';
 import cookieParser from 'cookie-parser';
 import client from 'prom-client';
+import amqp from 'amqplib';
 
 // DevTools ---------------------------------------------------------------//---------------------------
-import amqp from 'amqplib';
+
 // import dotenv from 'dotenv';
 // dotenv.config();
 // Dev Project Commands
-// - npm install dotenv
-// - npm remove dotenv
-// - npm install amqlib
+// npm install dotenv
+// npm remove dotenv
 
 // Variables -------------------------------------------------------------//----------------------------
 // const pgDb = process.env.POSTGRES_DB;
