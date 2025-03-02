@@ -13,12 +13,6 @@ import amqp from 'amqplib';
 // npm install dotenv
 // npm remove dotenv
 
-// Variables -------------------------------------------------------------//----------------------------
-// const pgDb = process.env.POSTGRES_DB;
-// const pgUser = process.env.POSTGRES_USER;
-// const pgPass = process.env.POSTGRES_PASSWORD;
-// const pgHost = process.env.DB_HOST;
-
 const rabbitMQUrl = process.env.RABBITMQ_URL;
 
 const signupQueue = process.env.SIGNUP_QUEUE;
@@ -71,70 +65,6 @@ app.engine('js', (_, options, callback) => {
 app.listen(PORT, HOST, () => {
     console.log(`Server has started on http://${HOST}:${PORT}`)
 })
-
-// PostgreSQL Initialization ------------------------------------------------------------------//----------------- can be removed once all db ooperations are in rabbitmq
-// const sequelize = new Sequelize(`${pgDb}`, `${pgUser}`, `${pgPass}`, {
-//   host: `${pgHost}`,
-//   port: 5432,
-//   dialect: 'postgres',
-//   dialectOptions: { connectTimeout: 60000 }
-// });
-// const connectWithRetry = async () => {
-//   while (true) {
-//     try {
-//       await sequelize.authenticate();
-//       console.log('Connection has been established successfully.');
-//       break; // Exit the loop if connection is successful
-//     } catch (err) {
-//       console.error('Unable to connect to the database:', err);
-//       console.log('Retrying in 5 seconds...'); // Log retry message
-//       await new Promise(res => setTimeout(res, 5000)); // Wait for 5 seconds before retrying
-//     }
-//   }
-// };
-// connectWithRetry();
-// const postsTable = sequelize.define('posts', {
-//   _id: {
-//     type: DataTypes.INTEGER,
-//     primaryKey: true, // Set _id as the primary key
-//     autoIncrement: true // Enable auto-increment
-//   },
-//   timestamp: {
-//     type: DataTypes.DATE,
-//     allowNull: false
-//   },
-//   userId: {
-//     type: DataTypes.INTEGER,
-//     allowNull: false
-//   },
-//   mood: {
-//     type: DataTypes.STRING,
-//     allowNull: false
-//   },
-//   image64: {
-//     type: DataTypes.TEXT
-//   }
-// });
-// const usersTable = sequelize.define('users', {
-//   _id: {
-//     type: DataTypes.INTEGER,
-//     primaryKey: true, // Set _id as the primary key
-//     autoIncrement: true // Enable auto-increment
-//   },
-//   email: {
-//     type: DataTypes.STRING,
-//     allowNull: false
-//   },
-//   password: {
-//     type: DataTypes.TEXT
-//   }
-// });
-// // Sync the model with the database (create the table if it doesn't exist)
-// sequelize.sync({ alter: false }).then(() => {
-//   console.log('Table created successfully.');
-// }).catch(err => {
-//   console.error('Error creating table:', err);
-// });
 
 // // Rabbitmq Queued ----------------------------------------------------------------//--------------------
 // Authentication 
@@ -370,6 +300,7 @@ app.post('/api', async (req, res) => {
   const data = req.body.data;
   try {
     // Connect to RabbitMQ
+    console.log(data);
     const connection = await amqp.connect(rabbitMQUrl);
     const channel = await connection.createChannel();
     await channel.assertQueue(postsQueue, { durable: true });

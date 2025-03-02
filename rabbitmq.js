@@ -373,6 +373,7 @@ const consumeMessages = async () => {
                     const image64 = postData.image64;
                     const id = postData.id;
                     const timestamp = Date.now();
+                    console.log(image64);
                     // const { mood, image64, timestamp, id } = data;     
                     const record = await postsTable.create({
                       mood: mood,
