@@ -7,8 +7,8 @@ import amqp from 'amqplib';
 
 // DevTools ---------------------------------------------------------------//---------------------------
 
-import dotenv from 'dotenv';
-dotenv.config();
+// import dotenv from 'dotenv';
+// dotenv.config();
 // Dev Project Commands
 // npm install dotenv
 // npm remove dotenv
