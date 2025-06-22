@@ -8,8 +8,8 @@ import sgMail from '@sendgrid/mail';
 
 
 // DevTools ------------------------------------------------------------------------------------//---------------------------
-// import dotenv from 'dotenv';
-// dotenv.config();
+import dotenv from 'dotenv';
+dotenv.config();
 // Dev Project Commands
 // - npm install dotenv
 // - npm remove dotenv
@@ -368,7 +368,7 @@ const consumeMessages = async () => {
                 let postData;
                 try {
                     postData = JSON.parse(email);
-                    console.log(postData);
+                    // console.log(postData);
                     const mood = postData.mood;
                     const image64 = postData.image64;
                     const id = postData.id;

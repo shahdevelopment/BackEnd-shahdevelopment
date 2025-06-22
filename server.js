@@ -7,8 +7,8 @@ import amqp from 'amqplib';
 
 // DevTools ---------------------------------------------------------------//---------------------------
 
-// import dotenv from 'dotenv';
-// dotenv.config();
+import dotenv from 'dotenv';
+dotenv.config();
 // Dev Project Commands
 // npm install dotenv
 // npm remove dotenv
@@ -30,15 +30,15 @@ const PORT = 9000
 const HOST = '0.0.0.0';
 
 // DevTools --------------------------------------------------------------//---------------------------
-// const cors_url = process.env.CORS_URL;
-// app.use((req, res, next) => {
-//   res.set('Access-Control-Allow-Origin', `${cors_url}`);
-//   res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-//   res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//   res.set('Access-Control-Allow-Credentials', 'true'); // Allow credentials
-//   res.set('Vary', 'Origin'); // Add the Vary header
-//   next(); // Proceed to the next middleware or route handler
-// });
+const cors_url = process.env.CORS_URL;
+app.use((req, res, next) => {
+  res.set('Access-Control-Allow-Origin', `${cors_url}`);
+  res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.set('Access-Control-Allow-Credentials', 'true'); // Allow credentials
+  res.set('Vary', 'Origin'); // Add the Vary header
+  next(); // Proceed to the next middleware or route handler
+});
 
 // Application Configuration --------------------------------------------//----------------------------
 const register = new client.Registry();
@@ -54,8 +54,8 @@ app.use((req, res, next) => {
   next();
 });
 app.use(cookieParser());
-app.use(express.json({ limit: '1mb' }));
-
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 // Set the MIME type for JavaScript files
 app.set('view engine', 'js');
 app.engine('js', (_, options, callback) => {
@@ -300,7 +300,7 @@ app.post('/api', async (req, res) => {
   const data = req.body.data;
   try {
     // Connect to RabbitMQ
-    console.log(data);
+    // console.log(data);
     const connection = await amqp.connect(rabbitMQUrl);
     const channel = await connection.createChannel();
     await channel.assertQueue(postsQueue, { durable: true });
